@@ -41,9 +41,6 @@ public class LinkedList<T> {
 
 		while (index != 0) {
 			currentNode = currentNode.next;
-			if (currentNode == null) {
-				return null;
-			}
 			index--;
 		}
 		return currentNode;
@@ -64,6 +61,16 @@ public class LinkedList<T> {
 	}
 
 	public void reverse() {
+		if (firstNode == null || firstNode.next == firstNode) {
+			return;
+		}
+
+		ListNode<T> currentNode = firstNode;
+		ListNode<T> nextNode = firstNode.next;
+
+		while (nextNode.next != null) {
+
+		}
 
 	}
 }
