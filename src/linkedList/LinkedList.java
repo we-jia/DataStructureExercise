@@ -1,4 +1,4 @@
-package myLinkedList;
+package linkedList;
 
 public class LinkedList<T> {
 	private ListNode<T> firstNode;
@@ -8,16 +8,19 @@ public class LinkedList<T> {
 
 	public void add(T ele) {
 		ListNode<T> node = new ListNode<>(ele);
-
 		if (firstNode == null) {
 			firstNode = node;
-		} else {
-			ListNode<T> currentNode = firstNode;
-			while (currentNode.next != null) {
-				currentNode = currentNode.next;
-			}
-			currentNode.next = node;
+			return;
 		}
+
+		ListNode<T> head = new ListNode<>();
+		head.next = firstNode;
+
+		while (head.next != null) {
+			head = head.next;
+		}
+
+		head.next = node;
 	}
 
 	public void add(int index, T ele) {
@@ -25,38 +28,43 @@ public class LinkedList<T> {
 		ListNode<T> head = new ListNode<>();
 		head.next = firstNode;
 
+		if (index == 0) {
+			firstNode = node;
+		}
+
 		while (index != 0) {
 			head = head.next;
 			index--;
 		}
 
-		if (head.next != null) {
-			node.next = head.next.next;
-		}
+		node.next = head.next;
 		head.next = node;
 	}
 
-	public ListNode<T> get(int index) {
+	public T get(int index) {
 		ListNode<T> currentNode = firstNode;
 
 		while (index != 0) {
 			currentNode = currentNode.next;
 			index--;
 		}
-		return currentNode;
+		return currentNode.value;
 	}
 
 	public void delete(int index) {
 		ListNode<T> head = new ListNode<>();
 		head.next = firstNode;
+		boolean indexIsZero = index == 0;
 
 		while (index != 0) {
 			head = head.next;
 			index--;
 		}
 
-		if (head.next != null) {
-			head.next = head.next.next;
+		head.next = head.next.next;
+
+		if (indexIsZero) {
+			firstNode = head.next;
 		}
 	}
 
@@ -65,12 +73,20 @@ public class LinkedList<T> {
 			return;
 		}
 
+		ListNode<T> previousNode = null;
 		ListNode<T> currentNode = firstNode;
 		ListNode<T> nextNode = firstNode.next;
 
-		while (nextNode.next != null) {
+		while (currentNode != null) {
+			currentNode.next = previousNode;
 
+			previousNode = currentNode;
+			currentNode = nextNode;
+			if (nextNode != null) {
+				nextNode = nextNode.next;
+			} else {
+				firstNode = previousNode;
+			}
 		}
-
 	}
 }

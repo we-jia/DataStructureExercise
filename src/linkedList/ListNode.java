@@ -1,4 +1,4 @@
-package myLinkedList;
+package linkedList;
 
 public class ListNode<T> {
 	public T value;
